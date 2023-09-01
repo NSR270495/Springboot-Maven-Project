@@ -6,14 +6,14 @@ pipeline {
 
     stage('Checkout Source') {
       steps {
-        git url:'https://github.com/NSR270495/React-App.git', branch:'main'
+        git url:'https://github.com/NSR270495/Springboot-Maven-Project.git', branch:'main'
       }
     }
 
     stage('Build image'){
        steps{
            withCredentials([usernamePassword(credentialsId: 'Dockerhub-Credential', passwordVariable: 'Password', usernameVariable: 'Username')]) {
-           sh "docker build -t naveen047/react-app:$BUILD_NUMBER ."
+           sh "docker build -t naveen047/maven-app:$BUILD_NUMBER ."
            }
        }
     }
@@ -21,7 +21,7 @@ pipeline {
      stage('Pushing Image'){
        steps{
           withCredentials([usernamePassword(credentialsId: 'Dockerhub-Credential', passwordVariable: 'Password', usernameVariable: 'Username')]) {
-             sh "docker push naveen047/react-app:$BUILD_NUMBER"
+             sh "docker push naveen047/maven-app:$BUILD_NUMBER"
           }
        }
      }
