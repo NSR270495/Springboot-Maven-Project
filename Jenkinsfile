@@ -24,14 +24,16 @@ pipeline {
 
      stage('Pushing Image'){
        steps{
-          withCredentials([usernamePassword(credentialsId: 'Dockerhub-Credential', passwordVariable: 'Password', usernameVariable: 'Username')]) {
-            sh docker login -u "Username" -p "Password" docker.io 
-            sh "docker push naveen047/maven-app:$BUILD_NUMBER"
+          script{
+            docker.withRegistry ('', Dockerhub-Credential){
+              dockerImage.push()
+            }
+          }
           }
        }
      }
 
-    stage('Deploying React.js container to Kubernetes') {
+    stage('Deploying Spring container to Kubernetes') {
       steps {
         script {
           kubernetesDeploy(configs: "deployment.yaml", "service.yaml")
