@@ -37,7 +37,7 @@ pipeline {
     stage('Deploying Spring container to Kubernetes') {
       steps {
         script {
-          kubernetesDeploy(configs: "deployment.yaml", "service.yaml")
+          kubernetesDeploy(configs: "Deployment.yaml", "Service.yaml")
         }
       }
     }
