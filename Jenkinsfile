@@ -21,6 +21,7 @@ pipeline {
      stage('Pushing Image'){
        steps{
           withCredentials([usernamePassword(credentialsId: 'Dockerhub-Credential', passwordVariable: 'Password', usernameVariable: 'Username')]) {
+            sh "docker login -u "Username" -p "Password" docker.io"
              sh "docker push naveen047/maven-app:$BUILD_NUMBER"
           }
        }
