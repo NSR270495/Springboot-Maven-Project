@@ -37,8 +37,8 @@ pipeline {
     stage('Deploying Spring container to Kubernetes') {
       steps {
         sshagent(['k8s-ssh-key']) {
-           sh 'ssh -o StrictHostKeyChecking=no ec2-user@172.31.14.146 cd /home/ec2-user'
-           sh 'scp -o StrictHostKeyChecking=no . ec2-user@172.31.14.146 .'
+           sh 'ssh -o StrictHostKeyChecking=no ec2-user@172.31.14.146'
+           sh 'scp -o StrictHostKeyChecking=no Service.yaml ec2-user@172.31.14.146:/home/ec2-user'
         }
       }
     }
