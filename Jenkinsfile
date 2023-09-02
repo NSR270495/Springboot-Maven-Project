@@ -38,7 +38,7 @@ pipeline {
       steps {
         sshagent(['k8s-ssh-key']) {
            sh 'ssh -o StrictHostKeyChecking=no ec2-user@13.233.104.249 cd /home/ec2-user'
-           sh 'scp -O StrictHostKeyChecking=no Deployment.yaml ec2-user@13.233.104.249 .
+           sh 'scp -o StrictHostKeyChecking=no Deployment.yaml ec2-user@13.233.104.249 .'
         }
       }
     }
