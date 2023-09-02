@@ -18,17 +18,15 @@ pipeline {
            script{
              docker.build rigistry + ":$BUILD_NUMBER"
            }
-           }
        }
     }
 
      stage('Pushing Image'){
        steps{
           script{
-            docker.withRegistry ('', Dockerhub-Credential){
+            docker.withRegistry ('', Dockerhub-Credential ){
               dockerImage.push()
             }
-          }
           }
        }
      }
@@ -40,7 +38,5 @@ pipeline {
         }
       }
     }
-
   }
-
 }
