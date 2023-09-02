@@ -36,9 +36,9 @@ pipeline {
 
     stage('Deploying Spring container to Kubernetes') {
       steps {
-        withKubeConfig([credentialsId: 'kubeconfig']) {
-          sh 'cat Deployment.yaml | sed "s/{{BUILD_NUMBER}}/$BUILD_NUMBER/g" | kubectl apply -f -'
-          sh 'kubectl apply -f Service.yaml'
+        sshagent(['k8s-ssh-key']) {
+           sh 'ssh -o StrictHostKeyChecking=no ec2-user@13.233.104.249 cd /home/ec2-user'
+           sh 'scp -O StrictHostKeyChecking=no Deployment.yaml ec2-user@13.233.104.249 .
         }
       }
     }
