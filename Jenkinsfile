@@ -1,5 +1,8 @@
 pipeline {
-
+  environment{
+  rigistry= "naveen047/maven-app"
+  registryCredential= "Dockerhub-Credential"
+  }
   agent any
 
   stages {
@@ -12,9 +15,9 @@ pipeline {
 
     stage('Build image'){
        steps{
-           withCredentials([usernamePassword(credentialsId: 'Dockerhub-Credential', passwordVariable: 'Password', usernameVariable: 'Username')]) {
-           sh "docker build -t maven-app:$BUILD_NUMBER ."
-           sh "docker tag maven-app:$BUILD_NUMBER naveen047/maven-app:$BUILD_NUMBER"
+           script{
+             docker.build rigistry + ":$BUILD_NUMBER"
+           }
            }
        }
     }
