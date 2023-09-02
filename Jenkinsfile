@@ -13,7 +13,8 @@ pipeline {
     stage('Build image'){
        steps{
            withCredentials([usernamePassword(credentialsId: 'Dockerhub-Credential', passwordVariable: 'Password', usernameVariable: 'Username')]) {
-           sh "docker build -t naveen047/maven-app:$BUILD_NUMBER ."
+           sh "docker build -t maven-app:$BUILD_NUMBER ."
+           sh "docker tag maven-app:$BUILD_NUMBER naveen047/maven-app:$BUILD_NUMBER"
            }
        }
     }
@@ -21,7 +22,6 @@ pipeline {
      stage('Pushing Image'){
        steps{
           withCredentials([usernamePassword(credentialsId: 'Dockerhub-Credential', passwordVariable: 'Password', usernameVariable: 'Username')]) {
-            sh "docker login -u "Username" -p "Password" docker.io"
              sh "docker push naveen047/maven-app:$BUILD_NUMBER"
           }
        }
