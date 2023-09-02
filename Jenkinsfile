@@ -40,6 +40,7 @@ pipeline {
            sh 'ssh -o StrictHostKeyChecking=no ec2-user@172.31.14.146'
            sh 'scp -o StrictHostKeyChecking=no Service.yaml Deployment.yaml ec2-user@172.31.14.146:/home/ec2-user'
            sh 'ssh -o StrictHostKeyChecking=no ec2-user@172.31.14.146 kubectl apply -f Deployment.yaml'
+           sh 'ssh -o StrictHostKeyChecking=no ec2-user@172.31.14.146 kubectl apply -f Service.yaml'
         }
       }
     }
