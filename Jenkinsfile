@@ -1,7 +1,7 @@
 pipeline {
   environment{
-  rigistry= "naveen047/maven-app"
-  registryCredential= "Dockerhub-Credential"
+  dockerimagename = "naveen047/maven-app"
+  dockerImage = ""
   }
   agent any
 
@@ -16,16 +16,19 @@ pipeline {
     stage('Build image'){
        steps{
            script{
-             docker.build rigistry + ":$BUILD_NUMBER"
+             dockerImage=docker.build dockerimagename + ":$BUILD_NUMBER"
            }
        }
     }
 
      stage('Pushing Image'){
+       environment{
+         rigistryCredential = "Dockerhub-Credential"
+       }
        steps{
           script{
-            docker.withRegistry ('', Dockerhub-Credential ){
-              dockerImage.push()
+            docker.withRegistry ('https://registry.hub.docker.com', rigistryCredential ){
+              dockerImage.push("latest")
             }
           }
        }
