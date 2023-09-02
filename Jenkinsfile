@@ -36,8 +36,9 @@ pipeline {
 
     stage('Deploying Spring container to Kubernetes') {
       steps {
-        script {
-          kubernetesDeploy(configs: "Deployment.yaml", "Service.yaml")
+        withKubeConfig([credentialsId: 'kubeconfig']) {
+          sh 'cat Deployment.yaml | sed "s/{{BUILD_NUMBER}}/$BUILD_NUMBER/g" | kubectl apply -f -'
+          sh 'kubectl apply -f Service.yaml'
         }
       }
     }
